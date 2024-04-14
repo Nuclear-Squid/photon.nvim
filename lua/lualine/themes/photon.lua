@@ -1,5 +1,5 @@
-local c = require('oneokai.colors')
-local cfg = vim.g.oneokai_config
+local c = require('photon.colors')
+local cfg = vim.g.photon_config
 local colors = {
     bg = c.bg0,
     fg = c.fg,
@@ -20,7 +20,7 @@ local one_okai = {
     },
     normal = {
         a = {fg = colors.bg, bg = colors.green, gui = 'bold'},
-        b = {fg = colors.fg, bg = c.bg3},
+        b = {fg = colors.fg, bg = c.bg2},
         c = {fg = colors.fg, bg = cfg.lualine.transparent and c.none or c.bg1},
     },
     visual = {a = {fg = colors.bg, bg = colors.purple, gui = 'bold'}},
