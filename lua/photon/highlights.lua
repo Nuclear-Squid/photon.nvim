@@ -1,6 +1,6 @@
-local c = require('oneokai.colors')
-local cfg = vim.g.oneokai_config
-local util = require("oneokai.util")
+local c = require('photon.colors')
+local cfg = vim.g.photon_config
+local util = require("photon.util")
 
 local M = {}
 local hl = {langs = {}, plugins = {}}
@@ -32,8 +32,8 @@ hl.common = {
     Normal = {fg = c.fg, bg = cfg.transparent and c.none or c.bg0},
     Terminal = {fg = c.fg, bg = cfg.transparent and c.none or c.bg0},
     EndOfBuffer = {fg = cfg.ending_tildes and c.bg2 or c.bg0, bg = cfg.transparent and c.none or c.bg0},
-    FoldColumn = {fg = c.fg, bg = cfg.transparent and c.none or c.bg1},
-    Folded = {fg = c.fg, bg = cfg.transparent and c.none or c.bg1},
+    FoldColumn = {fg = c.fg1, bg = cfg.transparent and c.none or c.bg1},
+    Folded = {fg = c.fg1, bg = cfg.transparent and c.none or c.bg1},
     SignColumn = {fg = c.fg, bg = cfg.transparent and c.none or c.bg0},
     ToolbarLine = {fg = c.fg},
     Cursor = {fmt = "reverse"},
@@ -60,7 +60,7 @@ hl.common = {
     WarningMsg = {fg = c.yellow, fmt = "bold"},
     MoreMsg = {fg = c.green, fmt = "bold"},
     IncSearch = {fg = c.bg0, bg = c.purple},
-    Search = {fg = c.bg0, bg = c.bg_yellow},
+    Search = {fg = c.bg0, bg = c.yellow},
     Substitute = {fg = c.bg0, bg = c.yellow},
     MatchParen = {fg = c.none, bg = c.grey},
     NonText = {fg = c.grey},
@@ -68,7 +68,7 @@ hl.common = {
     SpecialKey = {fg = c.grey},
     Pmenu = {fg = c.fg, bg = c.bg1},
     PmenuSbar = {fg = c.none, bg = c.bg1},
-    PmenuSel = {fg = c.bg0, bg = c.bg_blue},
+    PmenuSel = {fg = c.bg0, bg = c.blue},
     WildMenu = {fg = c.bg0, bg = c.green},
     PmenuThumb = {fg = c.none, bg = c.grey},
     Question = {fg = c.yellow},
@@ -76,8 +76,8 @@ hl.common = {
     SpellCap = {fg = c.yellow, fmt = "underline", sp = c.yellow},
     SpellLocal = {fg = c.green, fmt = "underline", sp = c.green},
     SpellRare = {fg = c.orange, fmt = "underline", sp = c.orange},
-    StatusLine = {fg = c.fg, bg = c.bg2},
-    StatusLineTerm = {fg = c.fg, bg = c.bg2},
+    StatusLine = {fg = c.fg1, bg = c.bg2},
+    StatusLineTerm = {fg = c.fg1, bg = c.bg2},
     StatusLineNC = {fg = c.grey, bg = c.bg1},
     StatusLineTermNC = {fg = c.grey, bg = c.bg1},
     TabLine = {fg = c.fg, bg = c.bg1},
@@ -90,9 +90,9 @@ hl.common = {
     Debug = {fg = c.yellow},
     debugPC = {fg = c.bg0, bg = c.yellow},
     debugBreakpoint = {fg = c.bg0, bg = c.orange},
-    ToolbarButton = {fg = c.bg0, bg = c.bg_blue},
+    ToolbarButton = {fg = c.bg0, bg = c.blue},
     FloatBorder = {fg = c.grey, bg = c.bg1},
-    NormalFloat = {fg = c.fg, bg = c.bg1},
+    NormalFloat = {fg = c.fg, bg = c.black},
 }
 
 hl.syntax = {
@@ -103,7 +103,7 @@ hl.syntax = {
     Boolean = colors.Purple,
     Type = colors.Yellow,
     Structure = colors.Yellow,
-    StorageClass = colors.blue,
+    StorageClass = { fg = c.orange, fmt = 'italic' },
     Identifier = {fg = c.fg, fmt = cfg.code_style.variables},
     Constant = colors.Cyan,
     PreProc = colors.Orange,
@@ -138,35 +138,38 @@ if vim.api.nvim_call_function("has", { "nvim-0.8" }) == 1 then
         ["@boolean"] = colors.Purple,
         ["@character"] = colors.Purple,
         ["@comment"] = {fg = c.grey, fmt = cfg.code_style.comments},
-        ["@conditional"] = {fg = c.red, fmt = cfg.code_style.keywords},
+        ["@conditional"] = {fg = c.orange, fmt = cfg.code_style.keywords},
         ["@constant"] = colors.Purple,
-        ["@constant.builtin"] = colors.Purple,
+        ["@constant.builtin"] = { fg = c.blue, fmt = "nocombine" },
         ["@constant.macro"] = colors.Purple,
         ["@constructor"] = {fg = c.green, fmt = "bold"},
+        ["@define"] = { fg = c.purple, fmt = "italic" },
         ["@error"] = colors.Red,
         ["@exception"] = colors.Red,
-        ["@field"] = colors.Fg,
+        ["@field"] = colors.Cyan,
         ["@float"] = colors.Purple,
         ["@function"] = {fg = c.green, fmt = cfg.code_style.functions},
+        ["@function.call"] = {fg = c.green, fmt = cfg.code_style.functions},
         ["@function.builtin"] = {fg = c.cyan, fmt = cfg.code_style.functions},
-        ["@function.macro"] = {fg = c.cyan, fmt = cfg.code_style.functions},
-        ["@include"] = colors.Red,
+        ["@function.macro"] = {fg = c.blue, fmt = cfg.code_style.functions},
+        ["@include"] = { fg = c.red, fmt = "italic" },
         ["@keyword"] = {fg = c.red, fmt = cfg.code_style.keywords},
-        ["@keyword.function"] = {fg = c.cyan, fmt = cfg.code_style.functions},
+        ["@keyword.function"] = {fg = c.red, fmt = cfg.code_style.functions},
         ["@keyword.operator"] =  {fg = c.red, fmt = cfg.code_style.keywords},
         ["@label"] = colors.Red,
-        ["@method"] = colors.Green,
-        ["@namespace"] = colors.Fg,
+        ["@method"] = { fg = c.green, fmt = cfg.code_style.functions },
+        ["@method.call"] = { fg = c.green, fmt = cfg.code_style.functions },
+        ["@namespace"] = colors.Orange,
         ["@none"] = colors.Cyan,
         ["@number"] = colors.Purple,
         ["@operator"] = colors.Red,
-        ["@parameter"] = colors.Fg,
-        ["@parameter.reference"] = colors.Fg,
-        ["@property"] = colors.Fg,
+        ["@parameter"] = colors.Blue,
+        ["@parameter.reference"] = colors.Blue,
+        ["@property"] = colors.Cyan,
         ["@punctuation.delimiter"] = colors.LightGrey,
         ["@punctuation.bracket"] = colors.LightGrey,
         ["@punctuation.special"] = colors.Red,
-        ["@repeat"] = {fg = c.red, fmt = cfg.code_style.keywords},
+        ["@repeat"] = {fg = c.purple, fmt = cfg.code_style.keywords},
         ["@string"] = {fg = c.yellow, fmt = cfg.code_style.strings},
         ["@string.regex"] = {fg = c.purple, fmt = cfg.code_style.strings},
         ["@string.escape"] = {fg = c.cyan, fmt = cfg.code_style.strings},
@@ -192,10 +195,12 @@ if vim.api.nvim_call_function("has", { "nvim-0.8" }) == 1 then
         ["@note"] = colors.Fg,
         ["@warning"] = colors.Yellow,
         ["@danger"] = colors.Red,
-        ["@type"] = colors.Blue,
-        ["@type.builtin"] = colors.Cyan,
+        ["@type"] = colors.Yellow,
+        ["@type.builtin"] = colors.Yellow,
+        ["@type.interface"] = { fg = c.yellow, fmt = 'italic' },
+        ["@type.qualifier"] = { fg = c.orange, fmt = 'italic' },
         ["@variable"] = {fg = c.fg, fmt = cfg.code_style.variables},
-        ["@variable.builtin"] = {fg = c.orange, fmt = cfg.code_style.variables},
+        ["@variable.builtin"] = {fg = c.blue, fmt = cfg.code_style.variables},
     }
 else
     hl.treesitter = {
@@ -549,7 +554,7 @@ hl.plugins.mini = {
     MiniTablineModifiedCurrent = { fg = c.purple, fmt = "bold,italic" },
     MiniTablineModifiedHidden = { fg = c.light_grey, bg = c.bg1, fmt = "italic" },
     MiniTablineModifiedVisible = { fg = c.yellow, bg = c.bg0, fmt = "italic" },
-    MiniTablineTabpagesection = { fg = c.bg0, bg = c.bg_yellow },
+    MiniTablineTabpagesection = { fg = c.bg0, bg = c.yellow },
     MiniTablineVisible = { fg = c.light_grey, bg = c.bg0 },
 
     MiniTestEmphasis = { fmt = "bold" },
@@ -561,7 +566,7 @@ hl.plugins.mini = {
 
 hl.langs.c = {
     cInclude = colors.Green,
-    cStorageClass = colors.Cyan,
+    cStorageClass = { fg = c.orange, fmt = 'italic' },
     cTypedef = colors.Orange,
     cDefine = colors.Cyan,
     cTSInclude = colors.Green,
@@ -732,7 +737,7 @@ function M.setup()
             color_name = c[name]
             if not color_name then
                 vim.schedule(function()
-                    vim.notify('oneokai.nvim: unknown color "' .. name .. '"', vim.log.levels.ERROR, { title = "oneokai.nvim" })
+                    vim.notify('photon.nvim: unknown color "' .. name .. '"', vim.log.levels.ERROR, { title = "photon.nvim" })
                 end)
                 return ""
             end
@@ -740,7 +745,7 @@ function M.setup()
         return prefix .. "=" .. color_name
     end
 
-    for group_name, group_settings in pairs(vim.g.oneokai_config.highlights) do
+    for group_name, group_settings in pairs(vim.g.photon_config.highlights) do
         vim.api.nvim_command(string.format("highlight %s %s %s %s %s", group_name,
             replace_color("guifg", group_settings.fg),
             replace_color("guibg", group_settings.bg),

@@ -14,10 +14,10 @@ M.config = {
 
     -- Changing Formats --
     code_style = {
-        comments = 'italic',
-        keywords = 'none',
-        functions = 'none',
-        strings = 'none',
+        comments  = 'italic',
+        keywords  = 'italic',
+        strings   = 'italic',
+        functions = 'bold',
         variables = 'none'
     },
 

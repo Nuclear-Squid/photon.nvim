@@ -1,128 +1,98 @@
-# oneokai.nvim
+# photon.nvim
+
+Photon.nvim (which has nothing to do with the archived
+[photon.vim](https://github.com/axvr/photon.vim)) is a fork of
+[Oneokai.nvim](https://github.com/AxelGard/oneokai.nvim), converted to be
+closer to [Gruvbox](https://github.com/morhetz/gruvbox) and
+[Duskfox](https://github.com/EdenEast/nightfox.nvim?tab=readme-ov-file#duskfox),
+like a weird fusion of all of the things I love about those themes.
+
+Since this is a fork, it should still have all the support for tree sitter and
+highlighting. 
+> For latest [TreeSitter](https://github.com/nvim-treesitter/nvim-treesitter)
+> syntax highlight, upgraded to Neovim 0.8.0 or later built with tree-sitter
+> 0.20.3+
 
 
-<img src="./doc/noevim-onemonokai-icon.png" style="width:30%"> 
+<table>
+<tr>
+<td width="40%"> <img src="img/screenshot_photon.png"> </td>
+<td>
 
-A fork of [onedark.nvim](https://github.com/navarasu/onedark.nvim), 
-converted to be similar to [One Monokai](https://github.com/azemoh/vscode-one-monokai) not an exact copy.
+I spend *way too much* time trying to make my neovim environment as pretty as I
+can, which lead me to make a somewhat custom theme (since I didn’t find one
+that had *everything* I wanted). I forked oneokai since it was the closest to
+what I wanted, but sprinkled in what I really loved from Duskfox (mainly it’s
+background and text colors) and Gruvbox (for the choice of colors of some
+elements, which I was used to).
 
-Since this is a fork, it should still have all the support for tree sitter and highlighting. 
-> For latest [TreeSitter](https://github.com/nvim-treesitter/nvim-treesitter) syntax highlight, upgraded to Neovim 0.8.0 or later built with tree-sitter 0.20.3+
+Here’s two somewhat interesting things I love about this theme and haven’t seen many
+others do :
 
+1. using gradients (like `let mut`, `use namespace::type` or `for ... in
+   self.item.method()` in rust, see screenshot), which make the theme really
+   colorful and expressive without becomming an eye sore (*cough cough*
+   dracula…), and is just neet !
+2. cleanly separate loops (colored purple) and conditionals (colored orange)
+   from other keywords (colored red), which (to me) helps understand the
+   general code structure just by looking at the colors. Photon was made to
+   present as much semantic information through the colors as possible (while
+   staying pretty).
 
-When I first started using NeoVim I wanted to use one of my favorite color themes, One Monokai. 
-So I googled around and found [cpea2506/one_monokai.nvim](https://github.com/cpea2506/one_monokai.nvim). 
-It looked like the thing a wanted, but I noticed that in some cases that the colors felt of and some things where had the wrong color. So I switched to using onedark.nvim. But I was missing one monokai. 
-So I decided to fork onedrak.nvim and remap the colors to be more like one monokai. Meaning that I have done a direct color re-mapping from onedark.nvim to One Monokai.
-but the main colors are still from one dark, just a re mapping of colors.
-
-## install 
-Install via package manager
-```vim
-" Using Vim-Plug
-Plug 'AxelGard/oneokai.nvim'
-```
-or
-```lua
--- Using Packer
-use 'AxelGard/oneokai.nvim'
-```
+</td>
+</tr>
+</table>
 
 ## themes 
 
-Since oneokai is a fork the same themes as onedark has. 
-there are some example screen shoot. 
+Right now there is just one theme, but I’ll *maybe* make a super dark and light
+one in the future.
 
-The default is dark theme.
+## install 
 
-<img width="100%" alt="Oneokai - dark" src="./doc/oneokai_dark.png">
+Install via package manager
 
-But I would recommend you use darker, darkplus.
-
-### dark, darker 
-
-<p float="left">
-<img width="412" alt="Onedark - dark" src="./doc/oneokai_dark.png">
-<img width="412" alt="Onedark - darker" src="./doc/oneokai_darker.png">
-</p>
-
-### cool, deep
-
-<p float="left">
-<img width="412" alt="Onedark - cool" src="./doc/oneokai_cool.png">
-<img width="412" alt="Onedark - deep" src="./doc/oneokai_deep.png">
-</p>
-
-### warm, warmer
-
-<p float="left">
-<img width="412" alt="Onedark - cool" src="./doc/oneokai_warm.png">
-<img width="412" alt="Onedark - deep" src="./doc/oneokai_warmer.png">
-</p>
-
-### darkplus, black 
-
-<p float="left">
-<img width="412" alt="Onedark - cool" src="./doc/oneokai_darkplus.png">
-<img width="412" alt="Onedark - deep" src="./doc/oneokai_black.png">
-</p>
-
-### notdark, paper 
-
-<p float="left">
-<img width="412" alt="Onedark - cool" src="./doc/oneokai_notdark.png">
-<img width="412" alt="Onedark - deep" src="./doc/oneokai_paper.png">
-</p>
-
-## setup and config 
-
-enable the theme 
 ```vim
-" Vim
-colorscheme oneokai
+" Using Vim-Plug
+Plug 'Nuclear-Squid/photon.nvim'
 ```
+
+or
+
+```lua
+-- Using Packer
+use 'Nuclear-Squid/photon.nvim'
+```
+
+You can override the default values like so :
 
 ```lua
 -- Lua
-require('oneokai').load()
-```
+require('photon').setup {
+    code_style = {
+        strings = "none",
+    },
 
-## styles 
+    colors = {
+        bg = "#222222",
+    },
 
-There are some pre defined styles of the oneokai theme
-`dark, darker, cool, deep, warm, warmer, darkplus, black, notdark, paper`, 
-this are based on the [onedark.nvim#themes](https://github.com/navarasu/onedark.nvim#themes).
-
-You can change it by
-
-```lua
--- Lua
-require('oneokai').setup {
-    style = 'deep'
+    highlights = {
+        ["@include"] = { fmt = "bold" },
+    } ,
 }
-require('oneokai').load()
-```
-```vim
-" Vim
-let g:oneokai_config = {
-    \ 'style': 'deep',
-\}
-colorscheme oneokai
+require('photon').load()
 ```
 
 ## lualine 
 
-Oneokai has lualine support
+Photon has lualine support
 
 ```lua
 require('lualine').setup {
   options = {
-    theme = 'oneokai',
+    theme = 'photon',
     -- ... your lualine config
   }
 }
 ```
-
----
-* This theme is a fork of [onedark.nvim](https://github.com/navarasu/onedark.nvim).
-* The colors are based on the [One Monokai](https://github.com/azemoh/vscode-one-monokai) theme for vscode.
