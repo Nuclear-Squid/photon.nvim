@@ -41,6 +41,8 @@ fn main() {
          .to_vec(),
     };
 
+    Catalog::show(&themes_i_like);
+
     themes_i_like.show();
     themes_i_like.keep_themes_with_great_semantic_coloring();
     assert_eq!(
